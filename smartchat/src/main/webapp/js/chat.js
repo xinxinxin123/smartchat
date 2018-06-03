@@ -28,13 +28,13 @@ function startWebSocket() {
 
 		if ('WebSocket' in window) {
 			try {
-				ws = new WebSocket("ws://"+localhost+"/SmartChat/websocket");
+				ws = new WebSocket("ws://"+localhost+"/chat/websocket");
 			} catch (e) {
 				$("#tipsContent").text("建立连接失败");
 				$("#tips").modal('show');
 			}
 		} else if ('MozWebSocket' in window) {
-			ws = new MozWebSocket("ws://"+localhost+"/SmartChat/websocket");
+			ws = new MozWebSocket("ws://"+localhost+"/chat/websocket");
 		} else {
 			$("#tipsContent").text("抱歉，您的浏览器不支持WebSocket");
 			$("#tips").modal('show');
