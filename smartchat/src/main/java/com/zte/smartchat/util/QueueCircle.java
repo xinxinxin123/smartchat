@@ -172,7 +172,7 @@ public class QueueCircle {
 	
 	public List<MessageToFore> getMessages(){
 		lock.lock();
-		List<MessageToFore> msgs = new ArrayList<>();
+		List<MessageToFore> msgs = new ArrayList<MessageToFore>();
 		try{
 			MsgNode currentTemp = this.current;
 			for(int i=0; i<this.size; i++){

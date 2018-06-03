@@ -35,7 +35,7 @@ import com.zte.smartchat.util.QueueCircle;
 @ServerEndpoint(value = "/websocket",configurator=GetHttpSessionConfigurator.class)
 public class WebSocketTest {
  
-    private static Hashtable<Integer, WebSocketTest> connections = new Hashtable<>();
+    private static Hashtable<Integer, WebSocketTest> connections = new Hashtable<Integer, WebSocketTest>();
     /*连接时唯一对应一个员工*/
     private  Staff staff;
     private Session session;
@@ -109,57 +109,53 @@ public class WebSocketTest {
     public void onMessage(String message) {
     	 // TODO: 过滤输入的内容
     	MsgJson msgJson = jsonUtil.fromJson(message, MsgJson.class);
-    	switch (msgJson.getTargetType()) {
-    	//1.取私聊消息记录
-		case "initPrivate":			
-    		List<MessageToFore> privateMsgToFores = iMessageSV.getPrivateTop10(this.staff.getId(), msgJson.getTargetId());
 
-    		//将私聊消息记录发送至客户端
-    		for(int i=0; i<privateMsgToFores.size(); i++){
-        		privateMsgToFores.get(i).setMessageType(Constant.MESSAGE_HISTORY);
-        		//System.out.println(privateMsgToFores.get(i).toString());
-        	}
-    		try {
-    			this.session.getBasicRemote().sendText(jsonUtil.toJson(privateMsgToFores));
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			//e.printStackTrace();
-    			LogManager.getLogger(getClass()).log(Level.SEVERE, "私聊消息记录发送至客户端失败", e);
-    		}
-			break;
-		//2.取群聊消息记录
-		case "initPublic":
-			List<MessageToFore> msgs = msgQue.getMessages(); 
-	    	for(int i=0; i<msgs.size(); i++){	    		
+    	if ("initPrivate".equals(msgJson.getTargetType())) {
+			List<MessageToFore> privateMsgToFores = iMessageSV.getPrivateTop10(this.staff.getId(), msgJson.getTargetId());
+
+			//将私聊消息记录发送至客户端
+			for(int i=0; i<privateMsgToFores.size(); i++){
+				privateMsgToFores.get(i).setMessageType(Constant.MESSAGE_HISTORY);
+				//System.out.println(privateMsgToFores.get(i).toString());
+			}
+			try {
+				this.session.getBasicRemote().sendText(jsonUtil.toJson(privateMsgToFores));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				LogManager.getLogger(getClass()).log(Level.SEVERE, "私聊消息记录发送至客户端失败", e);
+			}
+		}
+		else if ("initPublic".equals(msgJson.getTargetType())) {
+			List<MessageToFore> msgs = msgQue.getMessages();
+			for(int i=0; i<msgs.size(); i++){
 				msgs.get(i).setMessageType(Constant.MESSAGE_HISTORY);
-	    		//System.out.println(msgs.get(i).toString());
-	    	}
-	    	try {
+				//System.out.println(msgs.get(i).toString());
+			}
+			try {
 				this.session.getBasicRemote().sendText(jsonUtil.toJson(msgs));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				LogManager.getLogger(getClass()).log(Level.SEVERE, "群聊消息记录发送至客户端失败", e);
 			}
-	    	break;
-	    //3.发送消息
-		case "send":
+		}
+		else if ("send".equals(msgJson.getTargetType())) {
 			//3.1群消息
 			if (msgJson.getTargetId()==0) {
-				 MessageToFore messageToFore = insertAndReturnForeMessage(msgJson);
-	    		//插入消息到消息环队列
-	    		msgQue.insert(messageToFore);
-	    		//传到前台
-	    		broadCast(jsonUtil.toJson(messageToFore));
+				MessageToFore messageToFore = insertAndReturnForeMessage(msgJson);
+				//插入消息到消息环队列
+				msgQue.insert(messageToFore);
+				//传到前台
+				broadCast(jsonUtil.toJson(messageToFore));
 			}
 			//3.2私聊消息
 			else {
 				MessageToFore messageToFore = insertAndReturnForeMessage(msgJson);
 				whisper(messageToFore);
 			}
-			break;
-		//踢人消息   
-		case "changeState":
+		}
+		else if ("changeState".equals(msgJson.getTargetType())) {
 			//通知客户端退出登陆  并将数据库该用户状态设为禁用
 			if(msgJson.getTargetId() != 0){
 				MessageToFore stateMsg = new MessageToFore();
@@ -193,17 +189,39 @@ public class WebSocketTest {
 					}
 					broadCast(jsonUtil.toJson(stateMsg));
 				}
-				
+
 			}
+		}
+		else if ("upload_success".equals(msgJson.getTargetType())) {
+			MessageToFore messageToFore = insertAndReturnForeMessage(msgJson);
+			broadCast(jsonUtil.toJson(messageToFore));
+		}
+		/**
+    	switch (msgJson.getTargetType()) {
+    	//1.取私聊消息记录
+		case "initPrivate":			
+
+			break;
+		//2.取群聊消息记录
+		case "initPublic":
+
+	    	break;
+	    //3.发送消息
+		case "send":
+
+			break;
+		//踢人消息   
+		case "changeState":
+
 			break;
 		//上传文件消息
 		case "upload_success":
-			MessageToFore messageToFore = insertAndReturnForeMessage(msgJson);
-			broadCast(jsonUtil.toJson(messageToFore));
+
 			break;
 		default:
 			break;
 		}
+		 */
     }
     /**
      * 向数据库插入数据，并且返回记录

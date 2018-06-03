@@ -40,7 +40,7 @@ public class Constant {
 	static{
 		String[] names = {"maxCapacity","shareFileLocation","imagePath"};
 		PropertiesReader pReader = new PropertiesReader();
-		HashMap<String, String> hm = new HashMap<>();
+		HashMap<String, String> hm = new HashMap<String, String>();
 		try {
 			hm = pReader.getProperties("smartChat.properties", names);			
 		} catch (IOException e) {

@@ -29,14 +29,12 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
@@ -44,7 +42,6 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		
@@ -66,9 +63,10 @@ public class LoginServlet extends HttpServlet {
 					HttpSession session = request.getSession();
 					session.setAttribute("name", staff.getName());
 					session.setAttribute("staffId", staff.getCode());
-					
+
 					Cookie username = new Cookie("username", URLEncoder.encode(staff.getName(), "utf-8"));
-					username.setPath("/SmartChat");
+					//username.setPath("/SmartChat");
+					username.setMaxAge(30 * 60);
 					response.addCookie(username);
 					pw.print("ok");
 				}else if(staff.getState().equalsIgnoreCase("I")){

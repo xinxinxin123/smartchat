@@ -9,7 +9,7 @@ public class ListTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		List<Staff> staffs = new ArrayList<>();
+		List<Staff> staffs = new ArrayList<Staff>();
 		
 //		Staff s1 = new Staff("123","123","123","123");
 		

@@ -26,7 +26,7 @@ public final class PropertiesReader {
             inputStream.close();  
         }  
 
-        HashMap<String, String> hm = new HashMap<>();
+        HashMap<String, String> hm = new HashMap<String, String>();
         
         for(int i=0; i<names.length; i++){
         	String value = properties.getProperty(names[i]);

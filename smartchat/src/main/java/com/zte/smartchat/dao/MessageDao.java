@@ -71,7 +71,7 @@ public class MessageDao {
 	public List<MessageToFore> selectPrivateRecords(int staffId, int targetId){
 		SqlSession session = Mybatisutil.getSqlSession();
 		String statament = "com.zte.smartchat.mapper.MessageMapper.selectPrivateRecords";
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("targetId", targetId);
 		map.put("staffId", staffId);
 		List<MessageToFore> messages = session.selectList(statament, map);
@@ -85,7 +85,7 @@ public class MessageDao {
 	public List<MessageToFore> selectPrivateNormal(int staffId, int targetId, int number){
 		SqlSession session = Mybatisutil.getSqlSession();
 		String statament = "com.zte.smartchat.mapper.MessageMapper.selectPrivateRecords";
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("targetId", targetId);
 		map.put("staffId", staffId);
 		map.put("number", number);
@@ -175,7 +175,7 @@ public class MessageDao {
 	public List<MessageToFore> selectPrivateTop10(int staffId, int targetId){
 		SqlSession session = Mybatisutil.getSqlSession();
 		String statement = "com.zte.smartchat.mapper.MessageMapper.selectPrivateTop10";
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("targetId", targetId);
 		map.put("staffId", staffId);
 		List<MessageToFore> messages = session.selectList(statement, map);
