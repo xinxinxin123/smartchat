@@ -37,7 +37,7 @@ function ajaxLogin(username, password){
 			if(200 == xmlhttp.status){
 				if(xmlhttp.responseText == "ok"){
 					if(null != getCookie("username")){
-						var url = "/SmartChat/chat.html";
+						var url = "/chat/chat.html";
 						window.location.href = url;
 					}else{
 						$("#div_errormsg").html("<div class='alert alert-error' onclick='reset()'>请不要禁用Cookie，否则无法登陆哦亲！</div>");
