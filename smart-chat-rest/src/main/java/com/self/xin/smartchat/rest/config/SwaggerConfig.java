@@ -38,7 +38,7 @@ public class SwaggerConfig {
     public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ztesoft.zsmart.bss.itc.rest.intf"))
+                .apis(RequestHandlerSelectors.basePackage("com.self.xin.smartchat.rest.controller"))
                 .build()
                 //.directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 //.directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
