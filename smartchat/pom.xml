@@ -20,6 +20,7 @@
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -44,6 +45,14 @@
       <artifactId>mysql-connector-java-5.1.18-bin</artifactId>
       <version>8.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.1</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>
@@ -53,7 +62,6 @@
         <directory>src</directory>
         <excludes>
           <exclude>**/*.java</exclude>
-          <exclude>**/*.xml</exclude>
         </excludes>
       </resource>
     </resources>
