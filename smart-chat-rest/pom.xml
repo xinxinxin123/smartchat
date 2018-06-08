@@ -81,7 +81,6 @@
     <!-- 用于对json数据转化的包end-->
 
     <!--用于生成swagger API begin-->
-
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
@@ -107,7 +106,6 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
-
     <!--用于生成swagger API end-->
 
     <!-- mybatis核心包 -->
